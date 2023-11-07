@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dsou.recyclerview.databinding.FragmentMainBinding
 import com.dsou.recyclerview.list.MyListFragment
-import com.google.android.material.tabs.TabLayoutMediator
 
 
 class MainFragment : Fragment() {
@@ -37,16 +36,6 @@ class MainFragment : Fragment() {
     ): View {
         _binding = initBinding(inflater, container)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val adapter = PageAdapter(this)
-        binding.viewPager.adapter = adapter
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = adapter.getTitle(position)
-        }.attach()
     }
 
     override fun onDestroyView() {
