@@ -74,6 +74,7 @@ calling "onBindViewHolder" and never stopped.
 ```
 
 Here is a recording of the result
+
 <img src="preview/preview.gif" alt="recording" width="400"/>
 
 ## Other Observations
