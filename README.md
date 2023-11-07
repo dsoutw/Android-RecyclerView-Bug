@@ -12,31 +12,6 @@ A minimum example to reproduce the problem is available here:
 https://github.com/dsoutw/Android-RecyclerView-Bug
 The problem is tested on the emulator of API 30 and 34
 
-### The setup of the program
-
-The program has a hierarchy of views:
-```
-ConstraintLayout (main_layout activity_main.xml)
-→ fragment (main_fragment activity_main.xml)
-→ ConstraintLayout (fragment_layout fragment_main.xml)
-→ ViewPager2 (view_pager fragment_main.xml)
-→ ConstraintLayout (list_layout fragment_list.xml)
-→ RecyclerView (my_list fragment_list.xml)
-→ ConstraintLayout (item_layout holder_item.xml)
-→ TextView (item_text holder_item.xml)
-```
-
-On "view_pager", we set
-```
-android:layout_width="match_parent"
-```
-and remove all horizontal constraints. We note that "view_pager" is a child of a ConstraintLayout.
-
-On "item_text", we use a data binding expression
-```
-android:text="@{item.text}"
-```
-
 ### The function of the program
 
 The program has a counter "myListSize" in MyListFragment with an initial value 0. Each time when the
@@ -77,27 +52,61 @@ Here is a recording of the result
 
 <img src="preview/preview.gif" alt="recording" width="400"/>
 
-## Other Observations
+## The structure of the views
 
-1. I used ViewPager2 (in fragment_main.xml) to show the fragment (fragment_list.xml) that contains the RecyclerView. It seems that using ViewPager2 is required to reproduce the problem. The problem will no longer appear if the proxy fragment is removed, i.e. replace
+The program has a hierarchy of views:
 ```
-android:name="com.dsou.recyclerview.MainFragment"
+ConstraintLayout (main_layout activity_main.xml)
+→ fragment (main_fragment activity_main.xml)
+→ ConstraintLayout (fragment_layout fragment_main.xml)
+→ ViewPager2 (view_pager fragment_main.xml)
+→ ConstraintLayout (list_layout fragment_list.xml)
+→ RecyclerView (my_list fragment_list.xml)
+→ ConstraintLayout (item_layout holder_item.xml)
+→ TextView (item_text holder_item.xml)
 ```
-by  
 
-android:name="com.dsou.recyclerview.list.MyListFragment"
+On "view_pager", we set
+```
+android:layout_width="match_parent"
+```
+and remove all horizontal constraints. We note that "view_pager" is a child of a ConstraintLayout.
 
-in activity_main.xml
+On "item_text", we use a data binding expression
+```
+android:text="@{item.text}"
+```
 
-2. It seems that using the data binding in the holder view is essential. The problem will no longer appear if replace
+## Conditions that are required to reproduce the problem
 
+### ConstraintLayout: need to apply "match_parent" to the child "view_pager"
+
+On the view "view_pager", if we replace 
+```
+android:layout_width="match_parent"
+```
+by
+```
+android:layout_width="0dp"
+```
+and add the horizontal constraints, then the problems no longer exist.
+
+### ViewPager2: need to use a ViewPager2 to show the fragment "fragment_list.xml"
+
+If we replace the ViewPager2 "view_pager" by a regular fragment, then the problems no longer exist.  
+
+### Data binding: need to use data binding to display the item label in "holder_item.xml"
+
+If we replace
+```
 binding.item = item
-
+```
 by 
-
+```
 binding.itemText.text = item.text
-
-in MyListAdapter.kt, and remove the data binding tags in holder_item.xml
+```
+in "MyListAdapter.kt", and remove all data binding statements in "holder_item.xml", then the problem
+no longer exists.
 
 ## Copyright
 
