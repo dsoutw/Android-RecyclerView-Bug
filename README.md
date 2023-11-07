@@ -91,9 +91,13 @@ android:layout_width="0dp"
 ```
 and add the horizontal constraints, then the problems no longer exist.
 
+This is on the branch [feature/ConstraintLayout_remove_match_parent](https://github.com/dsoutw/Android-RecyclerView-Bug/tree/feature/ConstraintLayout_remove_match_parent).
+
 ### ViewPager2: need to use a ViewPager2 to show the fragment "fragment_list.xml"
 
 If we replace the ViewPager2 "view_pager" by a regular fragment, then the problems no longer exist.  
+
+This is on the branch [feature/ViewPager2_replaced_by_fragment](https://github.com/dsoutw/Android-RecyclerView-Bug/tree/feature/ViewPager2_replaced_by_fragment).
 
 ### Data binding: need to use data binding to display the item label in "holder_item.xml"
 
@@ -107,6 +111,8 @@ binding.itemText.text = item.text
 ```
 in "MyListAdapter.kt", and remove all data binding statements in "holder_item.xml", then the problem
 no longer exists.
+
+This is on the branch [feature/data_binding_remove](https://github.com/dsoutw/Android-RecyclerView-Bug/tree/feature/data_binding_remove).
 
 ## Copyright
 
