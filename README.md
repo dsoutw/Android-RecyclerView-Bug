@@ -37,7 +37,7 @@ On "item_text", we use a data binding expression
 android:text="@{item.text}"
 ```
 
-### The summary of the program
+### The function of the program
 
 The program has a counter "myListSize" in MyListFragment with an initial value 0. Each time when the
 user presses the add button
@@ -72,6 +72,8 @@ calling "onBindViewHolder" and never stopped.
 2023-11-07 15:39:20.301 10334-10334 RuleSelect...istAdapter com.dsou.recyclerview                D  onBindViewHolder item=2 position=1
 2023-11-07 15:39:20.302 10334-10334 RuleSelect...istAdapter com.dsou.recyclerview                D  onBindViewHolder item=3 position=2
 ```
+
+Here is a recording of the result ![preview.gif](preview/preview.gif)
 
 ## Other Observations
 
