@@ -17,13 +17,6 @@ If not, see <https://www.gnu.org/licenses/>.
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="item"
-            type="com.dsou.recyclerview.list.ItemData" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
@@ -39,7 +32,6 @@ If not, see <https://www.gnu.org/licenses/>.
             android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="@{item.text}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

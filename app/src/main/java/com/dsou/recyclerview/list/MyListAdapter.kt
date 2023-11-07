@@ -52,7 +52,7 @@ class MyListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(item: ItemData) {
-            binding.item = item
+            binding.itemText.text = item.text
             binding.root.setOnClickListener {
                 onItemClickListener.onItemClick(item)
             }
