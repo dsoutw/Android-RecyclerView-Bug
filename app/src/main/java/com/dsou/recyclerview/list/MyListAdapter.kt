@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dsou.recyclerview.databinding.HolderItemBinding
 
-class MyListAdapter : ListAdapter<ItemData, MyListAdapter.Holder>(DiffCallback()) {
+class MyListAdapter(
+    private val onItemClickListener: OnItemClickListener
+) : ListAdapter<ItemData, MyListAdapter.Holder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = createHolderBinding(parent)
@@ -26,12 +28,19 @@ class MyListAdapter : ListAdapter<ItemData, MyListAdapter.Holder>(DiffCallback()
         super.onViewRecycled(holder)
     }
 
-    class Holder internal constructor(
+    fun interface OnItemClickListener {
+        fun onItemClick(item: ItemData)
+    }
+
+    inner class Holder internal constructor(
         private val binding: HolderItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(item: ItemData) {
             binding.item = item
+            binding.root.setOnClickListener {
+                onItemClickListener.onItemClick(item)
+            }
         }
 
         fun onUnbind() {

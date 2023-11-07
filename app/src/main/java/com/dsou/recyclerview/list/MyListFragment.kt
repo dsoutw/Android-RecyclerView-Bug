@@ -33,7 +33,9 @@ class MyListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val appliedRuleListAdapter = MyListAdapter()
+        val appliedRuleListAdapter = MyListAdapter {
+            binding.clickedItemText.text = it.text
+        }
         binding.ruleList.adapter = appliedRuleListAdapter
         binding.ruleList.layoutManager = LinearLayoutManager(requireContext())
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
@@ -44,7 +46,9 @@ class MyListFragment : Fragment() {
             }
         }
 
-        initListeners()
+        binding.addButton.setOnClickListener {
+            onAddClicked()
+        }
     }
 
     override fun onDestroyView() {
@@ -57,12 +61,6 @@ class MyListFragment : Fragment() {
         container: ViewGroup?
     ): FragmentListBinding {
         return FragmentListBinding.inflate(inflater, container, false)
-    }
-
-    private fun initListeners() {
-        binding.addButton.setOnClickListener {
-            onAddClicked()
-        }
     }
 
     private fun onAddClicked() {
