@@ -1,3 +1,18 @@
+/**
+ * Copyright 2023 Dyi-Shing Ou
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.dsou.recyclerview.list
 
 import android.os.Bundle
@@ -19,8 +34,8 @@ class MyListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding: FragmentListBinding get() = _binding!!
 
-    private var appliedRuleListCount: Int = 0
-    private val appliedRuleList: MutableStateFlow<List<ItemData>> = MutableStateFlow(listOf())
+    private var myListSize: Int = 0
+    private val myList: MutableStateFlow<List<ItemData>> = MutableStateFlow(listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,15 +48,15 @@ class MyListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val appliedRuleListAdapter = MyListAdapter {
+        val myListAdapter = MyListAdapter {
             binding.clickedItemText.text = it.text
         }
-        binding.ruleList.adapter = appliedRuleListAdapter
-        binding.ruleList.layoutManager = LinearLayoutManager(requireContext())
+        binding.myList.adapter = myListAdapter
+        binding.myList.layoutManager = LinearLayoutManager(requireContext())
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            appliedRuleList.collect { list ->
+            myList.collect { list ->
                 withContext(Dispatchers.Main) {
-                    appliedRuleListAdapter.submitList(list)
+                    myListAdapter.submitList(list)
                 }
             }
         }
@@ -64,10 +79,10 @@ class MyListFragment : Fragment() {
     }
 
     private fun onAddClicked() {
-        appliedRuleListCount++
-        val list = (1..appliedRuleListCount).map {
+        myListSize++
+        val list = (1..myListSize).map {
             ItemData(id = it)
         }
-        appliedRuleList.value = list
+        myList.value = list
     }
 }
